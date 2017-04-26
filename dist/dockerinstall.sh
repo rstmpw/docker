@@ -7,3 +7,10 @@ sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/dock
 sudo yum -y install docker-ce
 sudo systemctl start docker
 sudo systemctl enable docker
+
+#Define custom docker network
+sudo docker network create \
+        --driver=bridge \
+        --subnet=192.168.183.0/24 \
+        --gateway=192.168.183.1 \
+        docker-rstm-bridge0
