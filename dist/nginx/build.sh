@@ -1,1 +1,1 @@
-docker build --no-cache -t rstmpw/nginx https://github.com/rstmpw/docker.git#:dist/nginx
+docker build --no-cache -t rstmpw/nginx https://raw.githubusercontent.com/rstmpw/docker/master/dist/nginx/Docker.tar.gz
