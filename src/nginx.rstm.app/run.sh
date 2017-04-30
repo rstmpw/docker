@@ -4,4 +4,4 @@ docker run -d \
     -p 80:80 \
     -p 443:443 \
     -v /vagrant:/usr/share/nginx/html:ro \
-    nginx
+    rstmpw/nginx
