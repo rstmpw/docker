@@ -4,6 +4,7 @@ sudo docker run -d \
     -p 80:80 \
     -p 443:443 \
     -v /vagrant/environment/nginx/dev/vhost.conf:/etc/nginx/conf.d/core7.conf:ro \
-    -v /vagrant/app/:/srv/core7.rstm.app/app:ro \
-    -v /vagrant/appdata/:/srv/core7.rstm.app/appdata:ro \
+    -v /vagrant/app:/srv/core7.rstm.app/app:ro \
+    -v /vagrant/appdata/public:/srv/core7.rstm.app/appdata/public:ro \
+    -v /vagrant/appdata/private:/srv/core7.rstm.app/appdata/private:ro \
     rstmpw/nginx
