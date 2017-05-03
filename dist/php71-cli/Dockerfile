@@ -9,4 +9,4 @@ RUN mkdir /vagrant \
 
 ENTRYPOINT /bin/bash
 WORKDIR /vagrant
-CMD ["true"]
+CMD [""]
