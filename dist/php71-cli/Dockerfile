@@ -7,6 +7,6 @@ RUN mkdir /vagrant \
     && php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer \
     && rm -f /tmp/composer-setup.*
 
-WORKDIR /vagrant/app
-ENTRYPOINT /bin/bash
+
+WORKDIR /vagrant
 CMD ['/bin/bash']
