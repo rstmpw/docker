@@ -13,6 +13,10 @@ RUN apt-get update \
     && apt-get install -y libxslt-dev \
     && docker-php-ext-install -j$(nproc) xsl soap \
     \
+    && apt-get -y install zlib1g-dev \
+    && docker-php-ext-install zip \
+    && apt-get purge --auto-remove -y zlib1g-dev \
+    \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
