@@ -9,8 +9,15 @@ RUN apt-get update \
     \
     && apt-get install -y --no-install-recommends libpq-dev \
     && docker-php-ext-install -j$(nproc) pgsql pdo_pgsql \
-    && rm -rf /var/lib/apt/lists/*
+    \
+    && apt-get install -y libxslt-dev \
+    && docker-php-ext-install -j$(nproc) xsl soap \
+    \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+
+#RUN apt-get install -y libbz2-dev
+#RUN docker-php-ext-install bz2
 
 RUN mkdir /var/log/php-fpm \
     && cd /usr/local/etc \
