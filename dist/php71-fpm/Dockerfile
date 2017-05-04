@@ -9,6 +9,7 @@ RUN apt-get update \
     \
     apt-get install -y libpq-dev \
     docker-php-ext-install pdo_pgsql \
+    && apt-get purge -y --auto-remove libfreetype6-dev libjpeg62-turbo-dev libpng12-dev
 
 RUN mkdir /var/log/php-fpm \
     && cd /usr/local/etc \
