@@ -1,6 +1,7 @@
 FROM php:7.1-fpm
 
-RUN mkdir /var/log/php-fpm \
+RUN docker-php-ext-install opcache /
+    && mkdir /var/log/php-fpm \
     && cd /usr/local/etc \
     && rm -r php-fpm.d/* \
     && rm php-fpm.conf.default \
