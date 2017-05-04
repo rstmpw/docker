@@ -7,10 +7,9 @@ RUN apt-get update \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
     \
-    && apt-get install -y libpq-dev \
+    && apt-get install -y --no-install-recommends libpq-dev \
     && docker-php-ext-install -j$(nproc) pgsql pdo_pgsql \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get purge -y --auto-remove libfreetype6-dev libjpeg62-turbo-dev libpng12-dev
+    && rm -rf /var/lib/apt/lists/*
 
 
 RUN mkdir /var/log/php-fpm \
