@@ -6,7 +6,10 @@ RUN docker-php-ext-install opcache \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install gd \
     \
-    && mkdir /var/log/php-fpm \
+    apt-get install -y libpq-dev \
+    docker-php-ext-install pdo_pgsql \
+
+RUN mkdir /var/log/php-fpm \
     && cd /usr/local/etc \
     && rm -r php-fpm.d/* \
     && rm php-fpm.conf.default \
