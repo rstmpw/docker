@@ -5,8 +5,10 @@ RUN apt-get update \
     \
     && apt-get install -y --no-install-recommends libfreetype6-dev libjpeg62-turbo-dev libpng12-dev \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) gd \
     \
     && apt-get install -y --no-install-recommends libpq-dev \
+    && docker-php-ext-install -j$(nproc) pgsql pdo_pgsql \
     \
     && apt-get install -y --no-install-recommends libxslt-dev \
     && docker-php-ext-install -j$(nproc) xsl soap \
@@ -16,22 +18,25 @@ RUN apt-get update \
     && docker-php-ext-install -j$(nproc) zip \
     && apt-get purge --auto-remove -y zlib1g-dev \
     \
+    && curl -fsSL 'https://github.com/igbinary/igbinary/archive/master.tar.gz' -o igbinary.tar.gz \
+	&& mkdir -p igbinary \
+	&& tar -xf igbinary.tar.gz -C igbinary --strip-components=1 \
+	&& rm igbinary.tar.gz \
+	&& ( \
+		cd igbinary \
+		&& phpize \
+		&& ./configure CFLAGS="-O2 -g" --enable-igbinary \
+		&& make -j$(nproc) \
+		&& make install \
+	) \
+	&& rm -r igbinary \
+	&& docker-php-ext-enable igbinary \
+    \
+    && pecl install memcached \
+    && docker-php-ext-enable memcached \
+    \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
-    \
-    && curl -fsSL 'https://github.com/igbinary/igbinary/archive/master.tar.gz' -o igbinary.tar.gz \
-        && mkdir -p igbinary \
-        && tar -xf igbinary.tar.gz -C igbinary --strip-components=1 \
-        && rm igbinary.tar.gz \
-        && ( \
-            cd igbinary \
-            && phpize \
-            && ./configure CFLAGS="-O2 -g" --enable-igbinary \
-            && make -j$(nproc) \
-            && make install \
-        ) \
-        && rm -r igbinary \
-        && docker-php-ext-enable igbinary \
     \
     && apt-get autoclean -qy && rm -rf /var/lib/apt/lists/*
 
