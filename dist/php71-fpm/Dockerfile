@@ -12,6 +12,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get purge -y --auto-remove libfreetype6-dev libjpeg62-turbo-dev libpng12-dev
 
+
 RUN mkdir /var/log/php-fpm \
     && cd /usr/local/etc \
     && rm -r php-fpm.d/* \
