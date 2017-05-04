@@ -1,4 +1,4 @@
-FROM php:7.1-fpm
+FROM rstmpw/php71-fpm
 
 RUN mkdir /vagrant \
     && curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
