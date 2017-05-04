@@ -6,15 +6,17 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends libfreetype6-dev libjpeg62-turbo-dev libpng12-dev \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
+    && apt-get purge --auto-remove -y libfreetype6-dev libjpeg62-turbo-dev libpng12-dev \
     \
     && apt-get install -y --no-install-recommends libpq-dev \
     && docker-php-ext-install -j$(nproc) pgsql pdo_pgsql \
+    && apt-get purge --auto-remove -y libpq-dev \
     \
-    && apt-get install -y libxslt-dev \
+    && apt-get install -y --no-install-recommends libxslt-dev \
     && docker-php-ext-install -j$(nproc) xsl soap \
     \
-    && apt-get -y install zlib1g-dev \
-    && docker-php-ext-install zip \
+    && apt-get install -y --no-install-recommends zlib1g-dev \
+    && docker-php-ext-install -j$(nproc) zip \
     && apt-get purge --auto-remove -y zlib1g-dev \
     \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
