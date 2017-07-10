@@ -10,6 +10,5 @@ sudo docker run -d \
     rstmpw/nginx
 
 sudo docker stop nginx.rstm.app
-sudo rm /vagrant/envdata/log/nginx/*
-sudo docker cp /vagrant/environment/nginx/dev/vhost.conf nginx.rstm.app:/etc/nginx/conf.d/core7.conf
+sudo docker cp /vagrant/environment/nginx/dev/vhost.conf nginx.rstm.app:/etc/nginx/conf.d/app.conf
 sudo docker start nginx.rstm.app
