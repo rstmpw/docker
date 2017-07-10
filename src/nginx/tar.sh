@@ -1,2 +1,2 @@
 cd Docker
-tar -cvzf ../Docker.tar.gz ./
+tar -cvzf ../Docker.tar.gz *
