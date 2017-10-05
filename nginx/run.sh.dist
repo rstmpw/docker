@@ -10,5 +10,5 @@ sudo docker run -d \
     rstmpw/nginx
 
 sudo docker stop nginx.local.app
-sudo docker cp /vagrant/environment/nginx/dev/vhost.conf nginx.local.app:/etc/nginx/conf.d/app.conf
+sudo docker cp /vagrant/environment/nginx/dev/vhost.conf nginx.local.app:/etc/nginx/conf.d/vhost.conf
 sudo docker start nginx.local.app
