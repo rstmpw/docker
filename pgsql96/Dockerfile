@@ -9,4 +9,4 @@ RUN mkdir -p /var/log/pgsql \
     log_directory = '/var/log/pgsql' \n\
     log_timezone = 'Europe/Moscow' \n\
     timezone = 'Europe/Moscow' \n\
-    " >> /etc/pgsql/conf.d/10-rstmpw.conf
+    " >> /etc/pgsql/conf.d/10-override.conf
