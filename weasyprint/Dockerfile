@@ -13,4 +13,4 @@ RUN apk add --no-cache libxslt python3 python3-dev libffi-dev musl-dev zlib-dev 
 ADD xml2pdf /usr/bin/xml2pdf
 ADD html2pdf /usr/bin/html2pdf
 
-CMD [ "weasyprint" ]
+CMD [ "weasyprint", "--version" ]
