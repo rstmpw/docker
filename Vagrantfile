@@ -34,12 +34,24 @@ Vagrant.configure("2") do |config|
     echo "/dev/mapper/ProjectVG-ProjectLV /opt/SomeProject        xfs     defaults        0 0" | sudo tee -a /etc/fstab
   SHELL
 
-  # Install docker
-  config.vm.provision "shell", inline: <<-SHELL
+  # Install docker and create custom network
+  config.vm.provision "shell", name: "Docker", inline: <<-SHELL
     bash <(curl -Ls https://raw.githubusercontent.com/rstmpw/docker/master/install.centos7.sh)
+    /vagrant/createCustomNet.sh
   SHELL
 
-  #config.vm.provision "shell", run: "always", inline: <<-SHELL
-  #	/vagrant/provisioning/envrestart.sh
-  #SHELL
+  # Run nginx
+  config.vm.provision "shell", name: "Nginx", inline: <<-SHELL
+    /vagrant/nginx/run.dist.sh
+  SHELL
+
+  # Run nginx
+  config.vm.provision "shell", name: "PHP", inline: <<-SHELL
+    /vagrant/php71/run.dist.sh
+  SHELL
+
+  config.vm.provision "shell", run: "always", inline: <<-SHELL
+  	sudo docker start php71fpm.local.app
+  	sudo docker start nginx.local.app
+  SHELL
 end
