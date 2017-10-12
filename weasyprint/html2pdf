@@ -1,0 +1,4 @@
+#!/bin/sh
+cd /opt/pfraf
+
+/usr/bin/weasyprint -v "$1" "$2"

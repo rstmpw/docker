@@ -10,4 +10,7 @@ RUN apk add --no-cache libxslt python3 python3-dev libffi-dev musl-dev zlib-dev 
     && fc-cache -f \
     && rm -rf /var/cache/apk/* /tmp/* /root/.cache/pip && find /usr/lib/python3.6 -name '*.pyc' -delete
 
+ADD xml2pdf /usr/bin/xml2pdf
+ADD html2pdf /usr/bin/html2pdf
+
 CMD [ "weasyprint" ]
