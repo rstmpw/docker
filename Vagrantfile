@@ -45,7 +45,7 @@ Vagrant.configure("2") do |config|
     /vagrant/nginx/run.dist.sh
   SHELL
 
-  # Run nginx
+  # Run PHP
   config.vm.provision "shell", name: "PHP", inline: <<-SHELL
     /vagrant/php71/run.dist.sh
   SHELL
