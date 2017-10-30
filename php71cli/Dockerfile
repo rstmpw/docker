@@ -6,6 +6,8 @@ RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
     && php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer \
     && rm -f /tmp/composer-setup.* \
 
+COPY entrypoint.sh /usr/local/bin/
+
 ENTRYPOINT ["entrypoint.sh"]
 
 CMD ["php", "-a"]
