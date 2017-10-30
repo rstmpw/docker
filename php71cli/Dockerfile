@@ -1,4 +1,4 @@
-FROM rstmpw:php71
+FROM rstmpw/php71
 
 RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
     && curl -o /tmp/composer-setup.sig https://composer.github.io/installer.sig \
