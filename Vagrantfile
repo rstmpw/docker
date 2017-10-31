@@ -40,18 +40,18 @@ Vagrant.configure("2") do |config|
     /vagrant/createCustomNet.sh
   SHELL
 
-  # Run nginx
-  config.vm.provision "shell", name: "Nginx", inline: <<-SHELL
-    /vagrant/nginx/run.dist.sh
-  SHELL
+#  # Run nginx
+#  config.vm.provision "shell", name: "Nginx", inline: <<-SHELL
+#    /vagrant/nginx/run.dist.sh
+#  SHELL
 
-  # Run PHP
-  config.vm.provision "shell", name: "PHP", inline: <<-SHELL
-    /vagrant/php71/run.dist.sh
-  SHELL
+#  # Run PHP
+#  config.vm.provision "shell", name: "PHP", inline: <<-SHELL
+#    /vagrant/php71/run.dist.sh
+#  SHELL
 
-  config.vm.provision "shell", run: "always", inline: <<-SHELL
-  	sudo docker start php71fpm.local.app
-  	sudo docker start nginx.local.app
-  SHELL
+#  config.vm.provision "shell", run: "always", inline: <<-SHELL
+#  	sudo docker start php71fpm.local.app
+#  	sudo docker start nginx.local.app
+#  SHELL
 end
