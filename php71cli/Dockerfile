@@ -5,5 +5,7 @@ RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
     && php -r "if (hash('SHA384', file_get_contents('/tmp/composer-setup.php')) !== trim(file_get_contents('/tmp/composer-setup.sig'))) { echo 'Invalid installer'.PHP_EOL; exit(1);}" \
     && php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer \
     && rm -f /tmp/composer-setup.*
-COPY docker-php-entrypoint /usr/local/bin/
+
+ENTRYPOINT []
+
 CMD ["php", "-a"]
