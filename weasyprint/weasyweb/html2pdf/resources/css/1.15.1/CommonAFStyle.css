@@ -1,0 +1,241 @@
+﻿.afPlainText,
+.afC,
+.afRight,
+.afHeader,
+.afSubscript,
+.afItalic,
+.afValue,
+.afTable,
+.afP,
+.afCenter,
+.afParagraph,
+.afJustify,
+.afRow,
+.afRow50,
+.afUnderline,
+.afFootnote,
+.afCheck,
+.afSign,
+.afColLeft-3-4,
+.afCol-1-4,
+.afCol-1-2,
+.afCol-1-3,
+.afCol-2-3,
+.afCol-3-4,
+.afCol-1-10,
+.afCol-8-10,
+.afCol-9-10,
+p{
+    font-family: Arial, "Helvetica CY", "Nimbus Sans L", Tahoma, Verdana, Segoe, sans-serif;
+    padding: 0;
+    margin: 3px;
+}
+.afC{
+    float: left;
+    margin-left: 5px;
+}
+.afRight{
+    float: right;
+    margin: 0;
+    width: 25%;
+}
+.afAlignRight{
+    text-align: right;
+}
+
+.afHeader{
+    font-size: 1.1666666em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.afSubscript{
+    font-style: italic;
+    font-size: 0.8333333em;
+    padding: 0;
+    margin: 0;
+    line-height: 1em;
+}
+.afItalic{
+    font-style: italic;
+}
+.afValue{
+    font-weight: bold;
+}
+.afUnderlinedBlock,
+.afBlankUnderlinedBlock,
+.afUnderlinedLeftBlock{
+    border-bottom: 1px black solid;
+    width: auto;
+    text-align: center;
+    overflow: hidden;
+    vertical-align: bottom;
+}
+
+.afBlankUnderlinedBlock{
+    height: 16px;
+}
+
+.afMarginLeft50{
+    margin-left: 50px;
+}
+
+.afMarginLeft100{
+    margin-left: 100px;
+}
+
+.afMarginLeft200{
+    margin-left: 200px;
+}
+
+.afMarginLeft300{
+    margin-left: 300px;
+}
+.afUnderlinedLeftBlock{
+    text-align: left;
+    clear: both;
+}
+.afPadding{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.afInterval{
+    padding: 5px;
+    clear: both;
+    margin: 0;
+}
+
+.afUnderline{
+    text-decoration: underline;
+}
+
+.afFootnote{
+    font-size: 0.8333333em;
+    text-indent: 30px;
+}
+.afLine{
+    border-top: 1px dashed #000;
+}
+.afWrap{
+    width: 100%;
+    font-size: 13px;
+    line-height: 1.2em;
+}
+
+.afP{
+    clear: both;
+}
+
+.afCenter{
+    clear: both;
+    text-align: center;
+}
+.afBlockCenter{
+	margin: 0 5% 0 5%;	
+}
+
+.afParagraph{
+    text-align: justify;
+    text-indent: 30px;
+    clear: both;
+}
+.afJustify{
+    text-align: justify;
+}
+
+.afRow{
+    width: 100%;
+    float: left;
+}
+
+.afRow50{
+    float: left;
+    margin-left: 50px;
+    width: 100%;
+}
+
+.afBox{
+    border: solid 1px black;
+    width: 98%;
+    padding: 10px;
+    float: left;
+}
+
+.afCheck{
+    border: solid 1px black;
+    width: 20px;
+    height: 20px;
+}
+
+.afColLeft-3-4{
+    float: left;
+    width: 75%;
+    margin: 0;
+}
+
+.afCol-1-4{
+    float: left;
+    width: 25%;
+    margin: 0;
+}
+
+.afCol-1-2{
+    float: left;
+    width: 50%;
+    margin: 0;
+}
+
+.afCol-1-3{
+    float: left;
+    width: 33.3333333333%;
+    margin: 0;
+}
+
+.afCol-2-3{
+    float: left;
+    width: 66.6666666667%;
+    margin: 0;
+}
+
+.afCol-3-4{
+    float: left;
+    width: 75%;
+    margin: 0;
+}
+.afCol-1-10{
+	float:left;
+    width: 5%;
+    margin: 0 2%;
+}
+.afCol-9-10{
+    float: left;
+    width: 90%;
+    margin: 0;
+}
+.afCol-8-10{
+    float: left;
+    width: 80%;
+    margin: 0;
+}
+
+
+.afTable{
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+.afTable td, th{
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.afSign{
+   display:table; 
+   width:100%;
+}
+.afSign div{
+    display:table-cell; 
+    vertical-align:bottom; 
+    width:27%;
+}

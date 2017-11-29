@@ -1,0 +1,24 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+    <title>test form</title>
+</head> 
+<body> 
+<h1>1.15.1</h1>
+<form  action="html2pdf/1.15.1" method="post" enctype="multipart/form-data"> 
+	<select id="version">
+		<option value="1.15.1">1.15.1</option>
+		<option value="2.12.5">2.12.5</option>
+	</select><br>
+    <input id="html" name="html" type="file" value=""/><br>
+    <input type="submit" value="submit"/> 
+</form>
+<script>
+	document.getElementById("version").onchange = function(e) {
+		document.getElementsByTagName("h1")[0].innerText = e.target.value;
+		document.forms[0].action = "html2pdf/"+e.target.value;
+	}
+</script>
+</body> 
+</html>

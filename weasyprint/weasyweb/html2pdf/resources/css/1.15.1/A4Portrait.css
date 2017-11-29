@@ -1,0 +1,19 @@
+﻿@page {
+    size: A4 portrait;
+    margin: 1cm 1cm 1cm 1cm;
+    @bottom-center {        
+        font-family: Arial, "Helvetica CY", "Nimbus Sans L", Tahoma, Verdana, Segoe, sans-serif;
+        font-size: 0.7em;
+        content: "Страница " counter(page) " из " counter(pages);   
+    }
+}
+
+.afNoBreakInside{
+    page-break-inside: avoid;
+}
+.afNoBreakBefore{
+    page-break-before: avoid;
+}
+div#break{
+    page-break-before: always;
+}
