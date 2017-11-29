@@ -1,5 +1,0 @@
-#!/bin/sh
-cd /opt/pfraf
-
-/usr/bin/xsltproc -v -o "$3" "$1" "$2" && \
-/usr/bin/weasyprint -v "$3" "$4"

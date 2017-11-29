@@ -3,14 +3,18 @@ MAINTAINER RSTM Team "team@rstm.pw"
 
 ENV LANG=ru_RU.UTF-8
 
-RUN apk add --no-cache libxslt python3 python3-dev libffi-dev musl-dev zlib-dev jpeg-dev cairo gcc glib pango msttcorefonts-installer ca-certificates\
+RUN apk add --no-cache python3 cairo pango jpeg-dev \
+    && apk add --no-cache --virtual build-dependencies python3-dev libffi-dev musl-dev zlib-dev gcc glib msttcorefonts-installer ca-certificates\
     && pip3 install certifi \
+    && pip3 install pyramid \
     && pip3 install weasyprint \
     && update-ms-fonts \
     && fc-cache -f \
+    && apk del build-dependencies \
     && rm -rf /var/cache/apk/* /tmp/* /root/.cache/pip && find /usr/lib/python3.6 -name '*.pyc' -delete
 
-ADD xml2pdf /usr/bin/xml2pdf
-ADD html2pdf /usr/bin/html2pdf
+COPY weasyweb /opt/weasyweb
 
-CMD [ "weasyprint", "--version" ]
+EXPOSE 4652
+
+CMD [ "python3", "/opt/weasyweb/html2pdf/app.py" ]
