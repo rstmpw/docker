@@ -1,6 +1,6 @@
-sudo docker create -d \
+sudo docker create \
     --name php71fpm.local.app \
-    --net custom-network-bridge0 \
+    --net custom-network-bridge \
     -v /vagrant/someproject/app:/vagrant/someproject/app:ro \
     -v /vagrant/someproject/envdata/php:/var/log/php-fpm \
     rstmpw/php71

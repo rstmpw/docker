@@ -53,7 +53,7 @@ RUN apt-get update \
 	&& rm -r memcached \
 	&& docker-php-ext-enable memcached \
     \
-    && curl -fsSL 'https://github.com/phpredis/phpredis/archive/3.1.4.tar.gz' -o redis.tar.gz \
+    && curl -fsSL 'https://github.com/phpredis/phpredis/archive/3.1.6.tar.gz' -o redis.tar.gz \
 	&& mkdir -p redis \
 	&& tar -xf redis.tar.gz -C redis --strip-components=1 \
 	&& rm redis.tar.gz \
