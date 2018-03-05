@@ -1,6 +1,6 @@
-sudo docker create -d \
+sudo docker create \
     --name nginx.local.app \
-    --net custom-network-bridge0 \
+    --net custom-network-bridge \
     -p 80:80 \
     -p 443:443 \
     -v /vagrant:/vagrant:ro \
