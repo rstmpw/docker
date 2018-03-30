@@ -42,5 +42,3 @@ CHANNELS: \n\
     && apt-get purge --auto-remove -y alien \
     && apt-get autoclean -qy && rm -rf /var/lib/apt/lists/*
 
-
-
