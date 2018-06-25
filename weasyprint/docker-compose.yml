@@ -1,0 +1,27 @@
+version: "2"
+networks:
+  weasyweb_net:
+    driver: bridge
+
+services:    
+  weasyweb:
+    image: rstmpw/weasyprint
+#   volumes:
+#   - ./css:/opt/weasyweb/resources/css
+#   - ./log:/opt/weasyweb/log
+#   - /etc/localtime:/etc/localtime:ro
+    networks:
+      - weasyweb_net
+
+  nginx:
+    image: rstmpw/nginx
+    volumes:
+      - ./weasyweb/conf/nginx.conf:/etc/nginx/conf.d/vhost.conf:ro
+#     - ./nginxlog:/var/log/nginx
+#     - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "80:80"
+    networks:
+      - weasyweb_net
+    depends_on:
+      - weasyweb

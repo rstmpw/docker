@@ -4,10 +4,12 @@ MAINTAINER RSTM Team "team@rstm.pw"
 ENV LANG=ru_RU.UTF-8
 
 RUN apk add --no-cache python3 cairo pango jpeg-dev \
-    && apk add --no-cache --virtual build-dependencies python3-dev libffi-dev musl-dev zlib-dev gcc glib msttcorefonts-installer ca-certificates\
+    && apk add --no-cache --virtual build-dependencies build-base linux-headers pcre-dev python3-dev libffi-dev musl-dev zlib-dev gcc glib msttcorefonts-installer ca-certificates\
+    && pip3 install --upgrade pip \
     && pip3 install certifi \
-    && pip3 install pyramid \
+    && pip3 install flask \
     && pip3 install weasyprint \
+    && pip3 install uwsgi \
     && update-ms-fonts \
     && fc-cache -f \
     && apk del build-dependencies \
@@ -17,4 +19,4 @@ COPY weasyweb /opt/weasyweb
 
 EXPOSE 4652
 
-CMD [ "python3", "/opt/weasyweb/html2pdf/app.py" ]
+CMD [ "uwsgi", "--ini", "/opt/weasyweb/conf/uwsgi.conf" ]

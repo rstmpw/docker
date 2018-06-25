@@ -1,0 +1,14 @@
+﻿.afBorderTable{
+    border-collapse: collapse;
+    border: 0;
+    width: 100%;
+}
+.afBorderSolid{
+    border: 1px solid black;
+}
+.afVerticalTop{
+	vertical-align: top
+}
+.afWidth{
+	width: 17%;			
+}

@@ -1,0 +1,17 @@
+﻿.afBorderTable{
+    border-collapse: collapse;
+    border: 0;
+    width: 100%;
+}
+.afBorderSolid{
+    border: 1px solid black;
+}
+.afBorderB{
+    border-bottom: 0px;
+}
+.afBorderT{
+    border-top: 0px;
+}
+.afWidth{
+	width: 10%;			
+}
