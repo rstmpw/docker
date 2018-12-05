@@ -6,15 +6,24 @@ services:
     build:
       context: ./php71
 #    volumes:
-#      - /php71/pool.dist.conf:/usr/local/etc/php-fpm.d/www.conf
-#      - /php71/php-fpm.dist.conf:/usr/local/etc/php-fpm.conf
+#      - ./php71/pool.dist.conf:/usr/local/etc/php-fpm.d/www.conf
+#      - ./php71/php-fpm.dist.conf:/usr/local/etc/php-fpm.conf
 
   php71mqseries:
     image: rstmpw/php71mqseries
     build:
       context: ./php71mqseries
 #    volumes:
-#      - /php71/pool.dist.conf:/usr/local/etc/php-fpm.d/www.conf
-#      - /php71/php-fpm.dist.conf:/usr/local/etc/php-fpm.conf
+#      - ./php71/pool.dist.conf:/usr/local/etc/php-fpm.d/www.conf
+#      - ./php71/php-fpm.dist.conf:/usr/local/etc/php-fpm.conf
     depends_on:
       - php71
+
+  nginx:
+    image: rstmpw/nginx
+    build:
+      context: ./php71mqseries
+#    volumes:
+#      - ./nginx/vhost.default.conf:/etc/nginx/conf.d/default.conf
+#      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+

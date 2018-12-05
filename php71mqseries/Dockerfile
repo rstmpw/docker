@@ -2,22 +2,22 @@ FROM rstmpw/php71
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends alien \
-    && curl -fsSL 'https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev904_linux_x86-64.tar.gz' -o mqc.tar.gz \
-        && mkdir -p mqc \
-        && tar -xf mqc.tar.gz -C mqc --strip-components=1\
-        && rm mqc.tar.gz \
+    && curl -fsSL 'https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev90_linux_x86-64.tar.gz' -o mqc.tar.gz \
+    && mkdir -p mqc \
+    && tar -xf mqc.tar.gz -C mqc --strip-components=1\
+    && rm mqc.tar.gz \
     && ( \
         cd mqc \
         && sed -i 's/^UNAME_FLAG=-i/UNAME_FLAG=-m/' ./mqlicense.sh \
         && ./mqlicense.sh -accept \
-        && alien --scripts --to-deb MQSeriesRuntime-9.0.4-0.x86_64.rpm \
-        && dpkg -i mqseriesruntime_9.0.4-1_amd64.deb \
-        && alien --scripts --to-deb MQSeriesClient-9.0.4-0.x86_64.rpm \
-        && dpkg -i mqseriesclient_9.0.4-1_amd64.deb \
-        && alien --scripts --to-deb MQSeriesSDK-9.0.4-0.x86_64.rpm \
-        && dpkg -i mqseriessdk_9.0.4-1_amd64.deb \
-        && alien --scripts --to-deb MQSeriesSamples-9.0.4-0.x86_64.rpm \
-        && dpkg -i mqseriessamples_9.0.4-1_amd64.deb \
+        && alien --scripts --to-deb MQSeriesRuntime-9.0.0-0.x86_64.rpm \
+        && dpkg -i mqseriesruntime_9.0.0-1_amd64.deb \
+        && alien --scripts --to-deb MQSeriesClient-9.0.0-0.x86_64.rpm \
+        && dpkg -i mqseriesclient_9.0.0-1_amd64.deb \
+        && alien --scripts --to-deb MQSeriesSDK-9.0.0-0.x86_64.rpm \
+        && dpkg -i mqseriessdk_9.0.0-1_amd64.deb \
+        && alien --scripts --to-deb MQSeriesSamples-9.0.0-0.x86_64.rpm \
+        && dpkg -i mqseriessamples_9.0.0-1_amd64.deb \
     ) \
     && rm -r mqc \
     && echo -e "\n\
