@@ -1,8 +1,8 @@
-FROM alpine:3.7
+FROM alpine:3.8
 
 MAINTAINER RSTM Team "team@rstm.pw"
 
-ENV NGINX_VERSION 1.14.0
+ENV NGINX_VERSION 1.14.1
 
 RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& CONFIG="\
@@ -62,7 +62,7 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 		zlib-dev \
 		linux-headers \
 		curl \
-		gnupg \
+		gnupg1 \
 		libxslt-dev \
 #		gd-dev \
 		geoip-dev \
@@ -136,6 +136,10 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& apk del .build-deps \
 	&& apk del .gettext \
 	&& mv /tmp/envsubst /usr/local/bin/ \
+	\
+	# Bring in tzdata so users could set the timezones through the environment
+	# variables
+	&& apk add --no-cache tzdata \
 	\
 	# forward request and error logs to docker log collector
 	&& ln -sf /dev/stdout /var/log/nginx/access.log \
