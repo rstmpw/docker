@@ -1,0 +1,1 @@
+docker-compose exec pgsql96 psql -U postgres
