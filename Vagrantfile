@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder "./", "/vagrant", type: "virtualbox"
 
   config.vm.provider "virtualbox" do |vbox|
-    vbox.name = "SomeProject"
+    vbox.name = "DockerProject"
 
     # Get disk path
     def_folder = `VBoxManage list systemproperties | grep "Default machine folder"`
@@ -34,24 +34,26 @@ Vagrant.configure("2") do |config|
     echo "/dev/mapper/ProjectVG-ProjectLV /opt/SomeProject        xfs     defaults        0 0" | sudo tee -a /etc/fstab
   SHELL
 
-  # Install docker and create custom network
+  # Install docker
   config.vm.provision "shell", name: "Docker", inline: <<-SHELL
-    bash <(curl -Ls https://raw.githubusercontent.com/rstmpw/docker/master/install.centos7.sh)
-    /vagrant/createCustomNet.sh
+    #bash <(curl -Ls https://raw.githubusercontent.com/rstmpw/docker/master/install.centos7.sh)
+    #/vagrant/createCustomNet.sh
+    sudo yum install -y yum-utils
+    sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+    sudo yum -y install docker-ce
+    sudo usermod -aG docker vagrant
+
+    sudo systemctl enable docker
+    sudo systemctl start docker
+
+	sudo yum install -y epel-release
+	sudo yum install -y python-pip
+	sudo pip install --upgrade pip
+	sudo pip install docker-compose
+	sudo yum update -y python*
   SHELL
 
-#  # Run nginx
-#  config.vm.provision "shell", name: "Nginx", inline: <<-SHELL
-#    /vagrant/nginx/run.dist.sh
-#  SHELL
-
-#  # Run PHP
-#  config.vm.provision "shell", name: "PHP", inline: <<-SHELL
-#    /vagrant/php71/run.dist.sh
-#  SHELL
-
 #  config.vm.provision "shell", run: "always", inline: <<-SHELL
-#  	sudo docker start php71fpm.local.app
-#  	sudo docker start nginx.local.app
+#  	docker-compose up --build php71
 #  SHELL
 end

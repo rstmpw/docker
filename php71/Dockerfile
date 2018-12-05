@@ -1,10 +1,13 @@
 FROM php:7.1-fpm
 
 RUN apt-get update \
-    && docker-php-ext-install -j$(nproc) opcache mysqli \
+    && apt-get install -y --no-install-recommends locales \
+    && echo '' >> /usr/share/locale/locale.alias \
+    && sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
+    && locale-gen --purge en_US.UTF-8 \
+    && echo -e 'LANG="en_US.UTF-8"\nLANGUAGE="en_US:en"\n' > /etc/default/locale \
     \
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
+    && docker-php-ext-install -j$(nproc) opcache mysqli \
     \
     && apt-get install -y --no-install-recommends zlib1g-dev \
     && docker-php-ext-install -j$(nproc) zip \
@@ -17,7 +20,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends libpq-dev \
     && docker-php-ext-install -j$(nproc) pgsql pdo_pgsql \
     \
-    && apt-get install -y --no-install-recommends libfreetype6-dev libjpeg62-turbo-dev libpng12-dev \
+    && apt-get install -y --no-install-recommends libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
     \
@@ -53,7 +56,7 @@ RUN apt-get update \
 	&& rm -r memcached \
 	&& docker-php-ext-enable memcached \
     \
-    && curl -fsSL 'https://github.com/phpredis/phpredis/archive/3.1.6.tar.gz' -o redis.tar.gz \
+    && curl -fsSL 'https://github.com/phpredis/phpredis/archive/4.2.0.tar.gz' -o redis.tar.gz \
 	&& mkdir -p redis \
 	&& tar -xf redis.tar.gz -C redis --strip-components=1 \
 	&& rm redis.tar.gz \
@@ -69,9 +72,6 @@ RUN apt-get update \
     \
     && apt-get autoclean -qy && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir /var/log/php-fpm \
-    && cd /usr/local/etc \
-    && rm -r php-fpm.d/* \
-    && rm php-fpm.conf.default \
-    && sed -i 's/^;daemonize = yes/daemonize = no/' php-fpm.conf \
-    && sed -i 's/^;error_log .*$/error_log = \/var\/log\/php-fpm\/error.log/' php-fpm.conf
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
