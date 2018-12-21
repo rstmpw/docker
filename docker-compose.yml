@@ -44,3 +44,34 @@ services:
 #      - ./pgsq96/override.conf:/etc/pgsql/conf.d/10-override.conf:ro
 #      - ./pgsql96/data/:/var/lib/postgresql/data
 
+  dnsmasq:
+    image: rstmpw/dnsmasq
+    build:
+      context: ./dnsmasq
+    ports:
+      - "53:53/udp"
+      - "53:53/tcp"
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ./dnsmasq/dns.conf:/etc/dnsmasq.d/override.conf:ro
+      - ./dnsmasq/addn-hosts:/etc/dnsmasq.d/addn-hosts:ro
+
+  rabbitmq:
+    image: rstmpw/rabbitmq
+    build:
+      context: ./rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    hostname: tr-1-50
+    environment:
+      RABBITMQ_DEFAULT_USER: 'root'
+      RABBITMQ_DEFAULT_PASS: 'Secret'
+      RABBITMQ_DEFAULT_VHOST: '/'
+#      RABBITMQ_HIPE_COMPILE: 1
+#    volumes:
+#      - ./data:/var/lib/rabbitmq
+#      - ./etc/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+#      - ./definitions.json:/etc/rabbitmq/definitions.json:ro # no shovels here
