@@ -19,6 +19,14 @@ services:
     depends_on:
       - php71
 
+  php72:
+    image: rstmpw/php72
+    build:
+      context: ./php72
+#    volumes:
+#      - ./php71/pool.dist.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+#      - ./php71/php-fpm.dist.conf:/usr/local/etc/php-fpm.conf:ro
+
   nginx:
     image: rstmpw/nginx
     build:
