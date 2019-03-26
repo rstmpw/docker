@@ -1,4 +1,4 @@
-FROM alpine:3.6
+FROM alpine:3.9
 MAINTAINER RSTM Team "team@rstm.pw"
 
 ENV LANG=ru_RU.UTF-8
