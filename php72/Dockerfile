@@ -7,7 +7,7 @@ RUN apt-get update \
     && locale-gen --purge en_US.UTF-8 \
     && echo -e 'LANG="en_US.UTF-8"\nLANGUAGE="en_US:en"\n' > /etc/default/locale \
     \
-    && docker-php-ext-install -j$(nproc) opcache mysqli sysvsem \
+    && docker-php-ext-install -j$(nproc) opcache mysqli sysvsem sockets bcmath \
     \
     && apt-get install -y --no-install-recommends zlib1g-dev \
     && docker-php-ext-install -j$(nproc) zip \
@@ -90,5 +90,13 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
-#&& pecl install xdebug \
-#&& docker-php-ext-enable xdebug \
+#   && pecl install xdebug \
+#   && docker-php-ext-enable xdebug \
+#   \
+#	&& apt-get install -y --no-install-recommends librabbitmq-dev libssh-dev \
+#	&& pecl install amqp \
+#   && docker-php-ext-enable amqp \
+#   \
+#	&& apt-get install -y --no-install-recommends libicu-dev \
+#	&& docker-php-ext-install -j$(nproc) intl \
+#	&& apt-get purge --auto-remove -y libicu-dev \
