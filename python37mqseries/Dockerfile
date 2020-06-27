@@ -1,4 +1,4 @@
-FROM python:3.7.4-slim-buster
+FROM python:3.7.7-slim-buster
 
 # Install IBM MQ client
 RUN export DEBIAN_FRONTEND=noninteractive \
@@ -10,7 +10,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     # Download and extract packages
     && mkdir -p /tmp/mq \
     && cd /tmp/mq \
-    && curl -LO http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev912_linux_x86-64.tar.gz \
+    && curl -LO http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev915_linux_x86-64.tar.gz \
     && tar -zxvf ./*.tar.gz \
     && cd /tmp/mq/MQServer \
     # Accept the license and proceed to installation
