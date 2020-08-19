@@ -5,10 +5,14 @@ RUN apt-get update \
     && echo '' >> /usr/share/locale/locale.alias \
     && sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
     && sed -i 's/# ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/' /etc/locale.gen \
-    && locale-gen --purge en_US.UTF-8 \
+    && locale-gen --purge en_US.UTF-8 ru_RU.UTF-8 \
     && echo -e 'LANG="en_US.UTF-8"\nLANGUAGE="en_US:en"\n' > /etc/default/locale \
     \
-    && docker-php-ext-install -j$(nproc) intl opcache mysqli sysvsem sockets bcmath \
+    && apt-get install -y --no-install-recommends libicu-dev \
+    && docker-php-ext-install -j$(nproc) intl \
+    && apt-get purge --auto-remove -y libicu-dev \
+    \
+    && docker-php-ext-install -j$(nproc) opcache mysqli sysvsem sockets bcmath \
     \
     && apt-get install -y --no-install-recommends libbz2-dev \
     && docker-php-ext-install -j$(nproc) bz2 \
