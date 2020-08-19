@@ -17,7 +17,6 @@ RUN apk add --no-cache python3 cairo pango jpeg-dev \
 
 COPY weasyweb /opt/weasyweb
 
-
 EXPOSE 4652
 
 CMD [ "uwsgi", "--ini", "/opt/weasyweb/conf/uwsgi.conf" ]
