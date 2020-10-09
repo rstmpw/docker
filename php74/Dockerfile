@@ -1,4 +1,4 @@
-FROM php:7.4.10-fpm-buster
+FROM php:7.4.11-fpm-buster
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends locales \
@@ -53,7 +53,7 @@ RUN apt-get update \
 	&& docker-php-ext-enable igbinary \
     \
     && apt-get install -y --no-install-recommends libmemcached11 libhashkit2 libmemcachedutil2 libmemcached-dev zlib1g-dev \
-    && curl -fsSL 'https://github.com/php-memcached-dev/php-memcached/archive/v3.1.5.tar.gz' -o memcached.tar.gz \
+    && curl -fsSL 'https://github.com/php-memcached-dev/php-memcached/archive/v3.1.6.tar.gz' -o memcached.tar.gz \
 	&& mkdir -p memcached \
 	&& tar -xf memcached.tar.gz -C memcached --strip-components=1 \
 	&& rm memcached.tar.gz \
