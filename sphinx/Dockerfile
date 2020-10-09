@@ -20,3 +20,5 @@ RUN ln -sv /dev/stdout /opt/sphinx/log/query.log \
     && ln -sv /dev/stdout /opt/sphinx/log/searchd.log
 
 EXPOSE 9312 9306
+
+CMD indexer --config /opt/sphinx/conf/sphinx.conf --all && searchd --nodetach --config /opt/sphinx/conf/sphinx.conf
