@@ -2,9 +2,12 @@ FROM alpine:3.9
 
 MAINTAINER RSTM Team "team@rstm.pw"
 
-ENV NGINX_VERSION 1.14.2
+ENV NGINX_VERSION 1.19.3
+ENV UPLOAD_MODULE_VERSION 2.3.0
 
-RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
+RUN apk --no-cache add bash \
+
+&& GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& CONFIG="\
 		--prefix=/etc/nginx \
 		--sbin-path=/usr/sbin/nginx \
@@ -49,7 +52,7 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 		--with-compat \
 		--with-file-aio \
 #		--with-http_v2_module \
-		--add-module=/usr/src/upload/nginx-upload-module-2.2 \
+		--add-module=/usr/src/nginx-upload-module-$UPLOAD_MODULE_VERSION \
 	" \
 	&& addgroup -S nginx \
 	&& adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G nginx nginx \
@@ -86,13 +89,9 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& mkdir -p /usr/src \
 	&& tar -zxC /usr/src -f nginx.tar.gz \
 	&& rm nginx.tar.gz \
-	\
-	&& mkdir /usr/src/upload \
-    && cd /usr/src/upload \
-    && curl -fSLO https://github.com/Austinb/nginx-upload-module/archive/2.2.zip \
-    && unzip 2.2.zip \
-	\
-    && cd /usr/src/nginx-$NGINX_VERSION \
+	&& cd /usr/src/nginx-$NGINX_VERSION \
+	&& curl -fSL https://github.com/fdintino/nginx-upload-module/archive/$UPLOAD_MODULE_VERSION.tar.gz -o /usr/src/nginx_upload.tar.gz \
+	&& tar xvzf /usr/src/nginx_upload.tar.gz -C /usr/src/ \
 	&& ./configure $CONFIG --with-debug \
 	&& make -j$(getconf _NPROCESSORS_ONLN) \
 	&& mv objs/nginx objs/nginx-debug \
@@ -117,7 +116,6 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
 	&& strip /usr/sbin/nginx* \
 	&& strip /usr/lib/nginx/modules/*.so \
 	&& rm -rf /usr/src/nginx-$NGINX_VERSION \
-	&& rm -rf /usr/src/upload \
 	\
 	# Bring in gettext so we can get `envsubst`, then throw
 	# the rest away. To do this, we need to install `gettext`
@@ -149,6 +147,10 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY vhost.default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
+
+ENV UPLOAD_FOLDER /upload
+RUN mkdir "$UPLOAD_FOLDER" && chown nginx:nginx -R "$UPLOAD_FOLDER"
+VOLUME /upload
 
 STOPSIGNAL SIGTERM
 
