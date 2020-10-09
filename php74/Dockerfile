@@ -38,7 +38,7 @@ RUN apt-get update \
     && pecl install msgpack \
     && docker-php-ext-enable msgpack \
     \
-    && curl -fsSL 'https://github.com/igbinary/igbinary/archive/3.1.4.tar.gz' -o igbinary.tar.gz \
+    && curl -fsSL 'https://github.com/igbinary/igbinary/archive/3.1.6.tar.gz' -o igbinary.tar.gz \
 	&& mkdir -p igbinary \
 	&& tar -xf igbinary.tar.gz -C igbinary --strip-components=1 \
 	&& rm igbinary.tar.gz \
