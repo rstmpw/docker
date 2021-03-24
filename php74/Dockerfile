@@ -1,4 +1,4 @@
-FROM php:7.4.11-fpm-buster
+FROM php:7.4.16-fpm-buster
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends locales \
@@ -38,7 +38,7 @@ RUN apt-get update \
     && pecl install msgpack \
     && docker-php-ext-enable msgpack \
     \
-    && curl -fsSL 'https://github.com/igbinary/igbinary/archive/3.1.6.tar.gz' -o igbinary.tar.gz \
+    && curl -fsSL 'https://github.com/igbinary/igbinary/archive/3.2.1.tar.gz' -o igbinary.tar.gz \
 	&& mkdir -p igbinary \
 	&& tar -xf igbinary.tar.gz -C igbinary --strip-components=1 \
 	&& rm igbinary.tar.gz \
@@ -84,7 +84,7 @@ RUN apt-get update \
 	&& docker-php-ext-enable memcache \
 	&& apt-get purge --auto-remove -y zlib1g-dev \
     \
-    && curl -fsSL 'https://github.com/phpredis/phpredis/archive/5.3.1.tar.gz' -o redis.tar.gz \
+    && curl -fsSL 'https://github.com/phpredis/phpredis/archive/5.3.4.tar.gz' -o redis.tar.gz \
 	&& mkdir -p redis \
 	&& tar -xf redis.tar.gz -C redis --strip-components=1 \
 	&& rm redis.tar.gz \
