@@ -3,6 +3,8 @@ MAINTAINER RSTM Team "team@rstm.pw"
 
 ENV LANG=ru_RU.UTF-8
 
+# v52.4
+
 RUN apk add --no-cache python3 cairo pango jpeg-dev \
     && apk add --no-cache --virtual build-dependencies build-base linux-headers pcre-dev python3-dev libffi-dev musl-dev zlib-dev gcc glib msttcorefonts-installer ca-certificates\
     && pip3 install --upgrade pip \
