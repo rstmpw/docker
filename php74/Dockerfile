@@ -1,6 +1,7 @@
 FROM php:7.4.16-fpm-buster
 
 RUN apt-get update \
+ 	&& apt-get install -y --no-install-recommends procps \
     && apt-get install -y --no-install-recommends locales \
     && echo '' >> /usr/share/locale/locale.alias \
     && sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
