@@ -1,4 +1,4 @@
-FROM php:7.4.19-fpm-buster
+FROM php:7.4.22-fpm-buster
 
 RUN apt-get update \
  	&& apt-get install -y --no-install-recommends procps \
@@ -39,7 +39,7 @@ RUN apt-get update \
     && pecl install msgpack \
     && docker-php-ext-enable msgpack \
     \
-    && curl -fsSL 'https://github.com/igbinary/igbinary/archive/3.2.1.tar.gz' -o igbinary.tar.gz \
+    && curl -fsSL 'https://github.com/igbinary/igbinary/archive/refs/tags/3.2.6.tar.gz' -o igbinary.tar.gz \
 	&& mkdir -p igbinary \
 	&& tar -xf igbinary.tar.gz -C igbinary --strip-components=1 \
 	&& rm igbinary.tar.gz \
