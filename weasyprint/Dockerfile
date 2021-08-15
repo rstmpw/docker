@@ -1,12 +1,22 @@
-FROM alpine:3.9
+FROM alpine:3.14.1
 MAINTAINER RSTM Team "team@rstm.pw"
 
+ENV MUSL_LOCPATH=/usr/share/i18n/locales/musl
 ENV LANG=ru_RU.UTF-8
 
-# v52.4
+# v53
 
-RUN apk add --no-cache python3 cairo pango jpeg-dev \
-    && apk add --no-cache --virtual build-dependencies build-base linux-headers pcre-dev python3-dev libffi-dev musl-dev zlib-dev gcc glib msttcorefonts-installer ca-certificates\
+RUN apk add --no-cache python3 py3-pip py3-wheel cairo pango jpeg openjpeg libintl gettext \
+    && apk add --no-cache --virtual build-dependencies build-base linux-headers pcre-dev python3-dev jpeg-dev openjpeg-dev libffi-dev musl-dev zlib-dev gcc g++ glib msttcorefonts-installer ca-certificates curl cmake gettext-dev \
+    && curl -fsSL "https://gitlab.com/rilian-la-te/musl-locales/-/archive/master/musl-locales-master.zip" -o musl-locales-master.zip \
+	&& unzip musl-locales-master.zip \
+	&& cd musl-locales-master \
+	&& cmake -DLOCALE_PROFILE=OFF -D CMAKE_INSTALL_PREFIX:PATH=/usr . \
+	&& make \
+	&& make install \
+	&& cd .. \
+	&& rm -r musl-locales-master \
+	\
     && pip3 install --upgrade pip \
     && pip3 install certifi \
     && pip3 install flask \
@@ -15,7 +25,7 @@ RUN apk add --no-cache python3 cairo pango jpeg-dev \
     && update-ms-fonts \
     && fc-cache -f \
     && apk del build-dependencies \
-    && rm -rf /var/cache/apk/* /tmp/* /root/.cache/pip && find /usr/lib/python3.6 -name '*.pyc' -delete
+    && rm -rf /var/cache/apk/* /tmp/* /root/.cache/pip && find /usr/lib/python3*/ -name '*.pyc' -delete
 
 COPY weasyweb /opt/weasyweb
 
