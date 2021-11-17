@@ -4,7 +4,9 @@ import uuid
 
 from flask import Flask, render_template, request, make_response
 from weasyprint import HTML
+from weasyprint.text.fonts import FontConfiguration
 
+font_config = FontConfiguration()
 app_dir = os.path.dirname(os.path.realpath(__file__))
 conf_dir = os.path.join(app_dir, 'conf')
 res_dir = os.path.join(app_dir, 'resources')
@@ -37,7 +39,7 @@ def h2p(code):
     f = request.files['fileselect']
     bs_dir = os.path.join(css_dir, code)
 
-    pdf = HTML(string=f, base_url=bs_dir).write_pdf()
+    pdf = HTML(string=f, base_url=bs_dir).write_pdf(font_config=font_config, optimize_size=('fonts',))
 
     rsp = make_response(pdf)
     rsp.headers['Content-Type'] = 'application/pdf'

@@ -1,10 +1,10 @@
-FROM alpine:3.14.1
+FROM alpine:3.14.3
 MAINTAINER RSTM Team "team@rstm.pw"
 
 ENV MUSL_LOCPATH=/usr/share/i18n/locales/musl
 ENV LANG=ru_RU.UTF-8
 
-# v53.3
+# v53.4
 
 RUN apk add --no-cache python3 py3-pip py3-wheel cairo pango jpeg openjpeg libintl gettext \
     && apk add --no-cache --virtual build-dependencies build-base linux-headers pcre-dev python3-dev jpeg-dev openjpeg-dev libffi-dev musl-dev zlib-dev gcc g++ glib msttcorefonts-installer ca-certificates curl cmake gettext-dev \
