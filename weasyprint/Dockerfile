@@ -1,4 +1,4 @@
-FROM alpine:3.14.3
+FROM alpine:3.15
 MAINTAINER RSTM Team "team@rstm.pw"
 
 ENV MUSL_LOCPATH=/usr/share/i18n/locales/musl
