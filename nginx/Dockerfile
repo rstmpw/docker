@@ -1,4 +1,4 @@
-FROM alpine:3.9
+FROM alpine:3.15
 
 MAINTAINER RSTM Team "team@rstm.pw"
 
