@@ -7,6 +7,7 @@ RUN apk update \
     && apk add --no-cache --virtual .build-deps unzip cmake make gcc gettext-dev musl-dev \
     && curl -fsSL "https://gitlab.com/rilian-la-te/musl-locales/-/archive/master/musl-locales-master.zip" -o musl-locales-master.zip \
     && unzip musl-locales-master.zip \
+    && rm musl-locales-master.zip \
     && cd musl-locales-master \
     && cmake -DLOCALE_PROFILE=OFF -D CMAKE_INSTALL_PREFIX:PATH=/usr . \
     && make \
