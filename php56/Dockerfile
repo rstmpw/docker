@@ -59,6 +59,20 @@ RUN apk update \
 	&& rm -r memcached \
 	&& docker-php-ext-enable memcached \
 	\
+	&& curl -fsSL 'https://pecl.php.net/get/memcache-2.2.7.tgz' -o memcache.tar.gz \
+    	&& mkdir -p memcache \
+    	&& tar -xf memcache.tar.gz -C memcache --strip-components=1 \
+    	&& rm memcache.tar.gz \
+    	&& ( \
+    		cd memcache \
+    		&& phpize \
+    		&& ./configure CFLAGS="-fstack-protector-strong -fpic -fpie -O2" \
+    		&& make -j$(nproc) \
+    		&& make install \
+    	) \
+    	&& rm -r memcache \
+    	&& docker-php-ext-enable memcache \
+    \
 #    && curl -fsSL 'https://github.com/phpredis/phpredis/archive/4.3.0.tar.gz' -o redis.tar.gz \
 #	&& mkdir -p redis \
 #	&& tar -xf redis.tar.gz -C redis --strip-components=1 \
