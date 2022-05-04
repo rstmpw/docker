@@ -45,7 +45,7 @@ RUN apk update \
     && rm -r igbinary \
     && docker-php-ext-enable igbinary \
     \
-    && curl -fsSL 'https://github.com/php-memcached-dev/php-memcached/archive/REL2_0.tar.gz' -o memcached.tar.gz \
+    && curl -fsSL 'https://pecl.php.net/get/memcached-2.2.0.tgz' -o memcached.tar.gz \
 	&& mkdir -p memcached \
 	&& tar -xf memcached.tar.gz -C memcached --strip-components=1 \
 	&& rm memcached.tar.gz \
