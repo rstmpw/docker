@@ -87,7 +87,26 @@ RUN apk update \
 #	&& rm -r redis \
 #	&& docker-php-ext-enable redis \
 #	\
-	&& apk add --no-cache libpng libpq libjpeg-turbo freetype libxslt libxml2 \
+	&& apk add --no-cache --virtual .build-deps cmake make gcc autoconf build-base \
+	&& curl -fsSL 'https://github.com/sektioneins/suhosin/archive/refs/tags/0.9.38.tar.gz' -o suhosin.tar.gz \
+        && mkdir -p suhosin \
+        && tar -xf suhosin.tar.gz -C suhosin --strip-components=1 \
+        && rm suhosin.tar.gz \
+        && ( \
+        	cd suhosin \
+    	  	# Alpine linux has flock() stuff in file.h
+            && sed -i '1i#include <sys/file.h>' log.c \
+    		&& phpize \
+        	&& ./configure CFLAGS="-fstack-protector-strong -fpic -fpie -O2" \
+        	&& make -j$(nproc) \
+        	&& make install \
+    	) \
+        && rm -r suhosin \
+        && docker-php-ext-enable suhosin \
+    	&& echo -e "\nsuhosin.executor.disable_eval = On" >> "$PHP_INI_DIR/conf.d/docker-php-ext-suhosin.ini" \
+    	&& echo -e "\nsuhosin.executor.disable_emodifier = On" >> "$PHP_INI_DIR/conf.d/docker-php-ext-suhosin.ini" \
+    \
+    && apk add --no-cache libpng libpq libjpeg-turbo freetype libxslt libxml2 \
 	&& apk add --no-cache --virtual .build-deps libxslt-dev postgresql-dev freetype-dev libpng-dev libjpeg-turbo-dev libxml2-dev \
 	&& docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
 	&& docker-php-ext-install -j$(nproc) opcache mysqli sysvsem sockets bcmath zip xsl soap pgsql pdo_pgsql gd \
