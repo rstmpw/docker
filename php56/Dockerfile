@@ -24,7 +24,9 @@ RUN apk update \
     && ( \
         cd msgpack \
         && phpize \
-        && ./configure CFLAGS="-O2 -g" --with-msgpack \
+        && ./configure CFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" \
+    		CPPFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" \
+    		LDFLAGS="-Wl,-O1 -pie" --with-msgpack \
         && make -j$(nproc) \
         && make install \
     ) \
@@ -38,7 +40,9 @@ RUN apk update \
     && ( \
         cd igbinary \
         && phpize \
-        && ./configure CFLAGS="-O2 -g" --enable-igbinary \
+        && ./configure CFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" \
+    		CPPFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" \
+    		LDFLAGS="-Wl,-O1 -pie" --enable-igbinary \
         && make -j$(nproc) \
         && make install \
     ) \
@@ -52,7 +56,9 @@ RUN apk update \
 	&& ( \
 		cd memcached \
 		&& phpize \
-		&& ./configure CFLAGS="-O2 -g" --enable-memcached-igbinary --enable-memcached-json --enable-memcached-msgpack --disable-memcached-sasl \
+		&& ./configure CFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" \
+    		CPPFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" \
+    		LDFLAGS="-Wl,-O1 -pie" --enable-memcached-igbinary --enable-memcached-json --enable-memcached-msgpack --disable-memcached-sasl \
 		&& make -j$(nproc) \
 		&& make install \
 	) \
@@ -66,7 +72,9 @@ RUN apk update \
     	&& ( \
     		cd memcache \
     		&& phpize \
-    		&& ./configure CFLAGS="-fstack-protector-strong -fpic -fpie -O2" \
+    		&& ./configure CFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" \
+    			CPPFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" \
+    			LDFLAGS="-Wl,-O1 -pie" \
     		&& make -j$(nproc) \
     		&& make install \
     	) \
@@ -80,7 +88,9 @@ RUN apk update \
 #	&& ( \
 #		cd redis \
 #		&& phpize \
-#		&& ./configure CFLAGS="-O2 -g" --enable-redis-igbinary \
+#		&& ./configure CFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" \
+#    		CPPFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" \
+#    		LDFLAGS="-Wl,-O1 -pie" --enable-redis-igbinary \
 #		&& make -j$(nproc) \
 #		&& make install \
 #	) \
@@ -97,14 +107,14 @@ RUN apk update \
     	  	# Alpine linux has flock() stuff in file.h
             && sed -i '1i#include <sys/file.h>' log.c \
     		&& phpize \
-        	&& ./configure CFLAGS="-fstack-protector-strong -fpic -fpie -O2" \
+        	&& ./configure CFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" \
+    			CPPFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" \
+    			LDFLAGS="-Wl,-O1 -pie" \
         	&& make -j$(nproc) \
         	&& make install \
     	) \
         && rm -r suhosin \
         && docker-php-ext-enable suhosin \
-    	&& echo -e "\nsuhosin.executor.disable_eval = On" >> "$PHP_INI_DIR/conf.d/docker-php-ext-suhosin.ini" \
-    	&& echo -e "\nsuhosin.executor.disable_emodifier = On" >> "$PHP_INI_DIR/conf.d/docker-php-ext-suhosin.ini" \
     \
     && apk add --no-cache libpng libpq libjpeg-turbo freetype libxslt libxml2 \
 	&& apk add --no-cache --virtual .build-deps libxslt-dev postgresql-dev freetype-dev libpng-dev libjpeg-turbo-dev libxml2-dev \
