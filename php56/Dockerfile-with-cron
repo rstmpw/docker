@@ -1,13 +1,5 @@
 FROM rstmpw/php56:5.6.40-suhosin
 
-RUN set -ex \
-# install bash
-    && apk add --no-cache \
-    bash \
-# making logging pipe
-    && mkfifo -m 0666 /var/log/cron.log \
-    && ln -s /var/log/cron.log /var/log/crond.log
+RUN adduser -s /sbin/nologin -D -u 1422 u1422
 
-COPY start-cron /usr/sbin
-
-CMD ["start-cron"]
+CMD ["crond", "-f", "-d", "8"]
