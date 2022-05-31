@@ -1,5 +1,12 @@
 FROM rstmpw/php56:5.6.40-suhosin
 
-RUN adduser -s /sbin/nologin -D -u 1422 u1422
+RUN mkdir -p /opt/crontabs \
+    && adduser -s /sbin/nologin -D -u 1422 u1422
+
+COPY entrypont.sh /usr/sbin
+
+VOLUME "/opt/crontabs"
+
+ENTRYPOINT ["entrypont.sh"]
 
 CMD ["crond", "-f", "-d", "8"]
