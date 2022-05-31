@@ -1,4 +1,4 @@
-FROM php:7.4.27-fpm-buster
+FROM php:7.4.29-fpm-buster
 
 RUN apt-get update \
  	&& apt-get install -y --no-install-recommends procps \
@@ -39,14 +39,16 @@ RUN apt-get update \
     && pecl install msgpack \
     && docker-php-ext-enable msgpack \
     \
-    && curl -fsSL 'https://github.com/igbinary/igbinary/archive/refs/tags/3.2.6.tar.gz' -o igbinary.tar.gz \
+    && curl -fsSL 'https://pecl.php.net/get/igbinary-3.2.7.tgz' -o igbinary.tar.gz \
 	&& mkdir -p igbinary \
 	&& tar -xf igbinary.tar.gz -C igbinary --strip-components=1 \
 	&& rm igbinary.tar.gz \
 	&& ( \
 		cd igbinary \
 		&& phpize \
-		&& ./configure CFLAGS="-O2 -g" --enable-igbinary \
+		&& ./configure CFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" \
+            CPPFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" \
+            LDFLAGS="-Wl,-O1 -pie" --enable-igbinary \
 		&& make -j$(nproc) \
 		&& make install \
 	) \
@@ -54,14 +56,16 @@ RUN apt-get update \
 	&& docker-php-ext-enable igbinary \
     \
     && apt-get install -y --no-install-recommends libmemcached11 libhashkit2 libmemcachedutil2 libmemcached-dev zlib1g-dev \
-    && curl -fsSL 'https://github.com/php-memcached-dev/php-memcached/archive/v3.1.5.tar.gz' -o memcached.tar.gz \
+    && curl -fsSL 'https://pecl.php.net/get/memcached-3.2.0.tgz' -o memcached.tar.gz \
 	&& mkdir -p memcached \
 	&& tar -xf memcached.tar.gz -C memcached --strip-components=1 \
 	&& rm memcached.tar.gz \
 	&& ( \
 		cd memcached \
 		&& phpize \
-		&& ./configure CFLAGS="-O2 -g" --enable-memcached-igbinary --enable-memcached-json --enable-memcached-msgpack --disable-memcached-sasl \
+		&& ./configure CFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" \
+           CPPFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" \
+           LDFLAGS="-Wl,-O1 -pie" --enable-memcached-igbinary --enable-memcached-json --enable-memcached-msgpack --disable-memcached-sasl \
 		&& make -j$(nproc) \
 		&& make install \
 	) \
@@ -70,14 +74,16 @@ RUN apt-get update \
 	&& apt-get purge --auto-remove -y libmemcached-dev zlib1g-dev \
 	\
 	&& apt-get install -y --no-install-recommends zlib1g-dev \
-	&& curl -fsSL 'https://github.com/websupport-sk/pecl-memcache/archive/4.0.5.2.tar.gz' -o memcache.tar.gz \
+	&& curl -fsSL 'https://pecl.php.net/get/memcache-4.0.5.2.tgz' -o memcache.tar.gz \
 	&& mkdir -p memcache \
 	&& tar -xf memcache.tar.gz -C memcache --strip-components=1 \
 	&& rm memcache.tar.gz \
 	&& ( \
 		cd memcache \
 		&& phpize \
-		&& ./configure CFLAGS="-fstack-protector-strong -fpic -fpie -O2" \
+		&& ./configure CFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" \
+           CPPFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" \
+           LDFLAGS="-Wl,-O1 -pie" \
 		&& make -j$(nproc) \
 		&& make install \
 	) \
@@ -85,14 +91,16 @@ RUN apt-get update \
 	&& docker-php-ext-enable memcache \
 	&& apt-get purge --auto-remove -y zlib1g-dev \
     \
-    && curl -fsSL 'https://github.com/phpredis/phpredis/archive/5.3.4.tar.gz' -o redis.tar.gz \
+    && curl -fsSL 'https://pecl.php.net/get/redis-5.3.7.tgz' -o redis.tar.gz \
 	&& mkdir -p redis \
 	&& tar -xf redis.tar.gz -C redis --strip-components=1 \
 	&& rm redis.tar.gz \
 	&& ( \
 		cd redis \
 		&& phpize \
-		&& ./configure CFLAGS="-O2 -g" --enable-redis-igbinary \
+		&& ./configure CFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" \
+           CPPFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" \
+           LDFLAGS="-Wl,-O1 -pie" --enable-redis-igbinary \
 		&& make -j$(nproc) \
 		&& make install \
 	) \

@@ -1,4 +1,4 @@
-FROM rstmpw/php74:7.4.27
+FROM rstmpw/php74:7.4.29
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends alien \
@@ -33,7 +33,9 @@ CHANNELS: \n\
 	&& ( \
 		cd mqseries \
 		&& phpize \
-		&& ./configure CFLAGS="-O2 -g" --with-libdir=lib64 \
+		&& ./configure CFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" \
+           CPPFLAGS="-fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64" \
+           LDFLAGS="-Wl,-O1 -pie" --with-libdir=lib64 \
 		&& make -j$(nproc) \
 		&& make install \
 	) \
