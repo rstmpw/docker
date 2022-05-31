@@ -2,7 +2,7 @@ FROM rstmpw/php74:7.4.29
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends alien \
-    && curl -fsSL 'https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqadv/mqadv_dev922_linux_x86-64.tar.gz' -o mqc.tar.gz \
+    && curl -fsSL 'https://files.rstm.pw/mqadv_dev922_linux_x86-64.tar.gz' -o mqc.tar.gz \
     && mkdir -p mqc \
     && tar -xf mqc.tar.gz -C mqc --strip-components=1 \
     && rm mqc.tar.gz \
