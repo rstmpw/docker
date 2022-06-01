@@ -1,0 +1,11 @@
+FROM rstmpw/php74:7.4.29-alpine
+
+RUN mkdir -p /opt/crontabs
+
+VOLUME "/opt/crontabs"
+
+COPY entrypont.sh /usr/sbin
+
+ENTRYPOINT ["entrypont.sh"]
+
+CMD ["crond", "-f", "-d", "8"]
