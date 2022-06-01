@@ -1,11 +1,10 @@
 FROM rstmpw/php56:5.6.40-suhosin
 
-RUN mkdir -p /opt/crontabs \
-    && adduser -s /sbin/nologin -D -u 1422 u1422
-
-COPY entrypont.sh /usr/sbin
+RUN mkdir -p /opt/crontabs
 
 VOLUME "/opt/crontabs"
+
+COPY entrypont.sh /usr/sbin
 
 ENTRYPOINT ["entrypont.sh"]
 
