@@ -115,7 +115,7 @@ RUN apk update \
     && docker-php-ext-enable amqp \
     \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) opcache mysqli sysvsem sockets bcmath zip xsl soap pgsql pdo_pgsql gd intl bz2 \
+    && docker-php-ext-install -j$(nproc) opcache mysqli sysvsem sockets bcmath zip xsl soap pgsql pdo_pgsql pdo_mysql gd intl bz2 \
     \
 #   && pecl install xdebug \
 #   && docker-php-ext-enable xdebug \
