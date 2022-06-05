@@ -20,4 +20,6 @@ if [ "$(ls -A /opt/crontabs)" ]; then
   done
 fi
 
+syslogd -O /proc/1/fd/1 -S
+
 exec "$@"
