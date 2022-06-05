@@ -5,6 +5,7 @@ RUN set -ex \
 		# install cron & rsyslog
 		&& apt-get install -y --no-install-recommends cron busybox-syslogd \
     	&& printf "LANG=\"en_US:UTF-8\"\nLC_ALL=\"en_US:UTF-8\"\n" > /etc/default/locale \
+    	&& sed -i '/^session.*pam_unix.so\s*/i session [success=1 default=ignore] pam_succeed_if.so service in cron quiet use_uid' /etc/pam.d/common-session-noninteractive \
     	&& apt-get autoclean -qy && rm -rf /var/lib/apt/lists/* \
     	&& rm -rf /etc/cron.*/* \
     	&& mkdir -p /opt/crontabs
