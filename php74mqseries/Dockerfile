@@ -20,11 +20,11 @@ RUN apt-get update \
         && dpkg -i mqseriessamples_9.2.2-1_amd64.deb \
     ) \
     && rm -r mqc \
-    && echo -e "\n\
-TCP: \n\
-	 Connect_Timeout=3 \n\
-CHANNELS: \n\
-	 CCSID=1208 \n\
+    && printf "\n\
+TCP:\n\
+  Connect_Timeout=3\n\
+CHANNELS:\n\
+  CCSID=1208 \n\
 " >> /var/mqm/mqclient.ini \
 	&& curl -fsSL 'https://github.com/rstmpw/pecl-networking-mqseries/archive/php7-mqmh.tar.gz' -o mqseries.tar.gz \
 	&& mkdir -p mqseries \

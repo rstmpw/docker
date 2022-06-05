@@ -1,0 +1,18 @@
+FROM rstmpw/php74mqseries:7.4.29-9.2.2.0
+
+RUN set -ex \
+		&& apt-get clean && apt-get update \
+		# install cron & rsyslog
+		&& apt-get install -y --no-install-recommends cron busybox-syslogd \
+    	&& printf "LANG=\"en_US:UTF-8\"\nLC_ALL=\"en_US:UTF-8\"\n" > /etc/default/locale \
+    	&& apt-get autoclean -qy && rm -rf /var/lib/apt/lists/* \
+    	&& rm -rf /etc/cron.*/* \
+    	&& mkdir -p /opt/crontabs
+
+VOLUME ["/opt/crontabs"]
+
+COPY entrypoint-debian.sh /usr/sbin/entrypoint.sh
+
+ENTRYPOINT ["entrypoint.sh"]
+
+CMD ["cron", "-f"]
