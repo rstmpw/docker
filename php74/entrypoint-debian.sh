@@ -12,9 +12,9 @@ if [ "$(ls -A /opt/crontabs)" ]; then
   for fl in * ; do
     uid=$(echo "$fl" | sed -r 's/^u([0-9]+)$/\1/')
     if [ "$fl" != "$uid" ]; then
-      adduser --quiet --disabled-login --disabled-password --uid "$uid" "$fl" || true
+      adduser --disabled-login --disabled-password --gecos "" --uid "$uid" "$fl" || true
     else
-      adduser --quiet --disabled-login --disabled-password "$fl" || true
+      adduser --disabled-login --disabled-password --gecos "" "$fl" || true
     fi
     crontab -u "$fl" "$fl"
   done
