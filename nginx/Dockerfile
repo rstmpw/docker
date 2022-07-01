@@ -1,12 +1,12 @@
-FROM alpine:3.15
+FROM alpine:3.16
 
 MAINTAINER RSTM Team "team@rstm.pw"
 
-ENV NGINX_VERSION 1.20.2
+ENV NGINX_VERSION 1.22.0
 ENV UPLOAD_MODULE_VERSION 2.3.0
 
 RUN apk --no-cache add bash \
-&& GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
+&& GPG_KEYS="13C82A63B603576156E30A4EA0EA981B66B0D967" \
 	&& CONFIG="\
 		--prefix=/etc/nginx \
 		--sbin-path=/usr/sbin/nginx \
@@ -53,23 +53,25 @@ RUN apk --no-cache add bash \
 #		--with-http_v2_module \
 		--add-module=/usr/src/nginx-upload-module-$UPLOAD_MODULE_VERSION \
 	" \
-	&& addgroup -S nginx \
-	&& adduser -D -S -h /var/cache/nginx -s /sbin/nologin -G nginx nginx \
+	&& addgroup -g 101 -S nginx \
+    && adduser -S -D -H -u 101 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx \
 	&& apk add --no-cache --virtual .build-deps \
 		gcc \
 		libc-dev \
 		make \
 		openssl-dev \
-		pcre-dev \
-		zlib-dev \
+		pcre2-dev \
+    	zlib-dev \
 		linux-headers \
 		curl \
-		gnupg1 \
-		libxslt-dev \
+		gnupg \
+#		libxslt-dev \
 #		gd-dev \
 		geoip-dev \
-		unzip \
-	&& curl -fSL https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz -o nginx.tar.gz \
+		libedit-dev \
+    	unzip \
+    	findutils \
+    && curl -fSL https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz -o nginx.tar.gz \
 	&& curl -fSL https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz.asc  -o nginx.tar.gz.asc \
 	&& export GNUPGHOME="$(mktemp -d)" \
 	&& found=''; \
@@ -91,7 +93,7 @@ RUN apk --no-cache add bash \
 	&& cd /usr/src/nginx-$NGINX_VERSION \
 	&& curl -fSL https://github.com/fdintino/nginx-upload-module/archive/$UPLOAD_MODULE_VERSION.tar.gz -o /usr/src/nginx_upload.tar.gz \
 	&& tar xvzf /usr/src/nginx_upload.tar.gz -C /usr/src/ \
-	&& ./configure $CONFIG --with-debug \
+	&& ./configure $CONFIG \
 	&& make -j$(getconf _NPROCESSORS_ONLN) \
 	&& mv objs/nginx objs/nginx-debug \
 #	&& mv objs/ngx_http_xslt_filter_module.so objs/ngx_http_xslt_filter_module-debug.so \
@@ -138,9 +140,12 @@ RUN apk --no-cache add bash \
 	# variables
 	&& apk add --no-cache tzdata \
 	\
+	&& apk add --no-cache curl ca-certificates \
 	# forward request and error logs to docker log collector
 	&& ln -sf /dev/stdout /var/log/nginx/access.log \
-	&& ln -sf /dev/stderr /var/log/nginx/error.log
+	&& ln -sf /dev/stderr /var/log/nginx/error.log \
+    \
+    && mkdir -p /var/cache/nginx && chown nginx:nginx /var/cache/nginx && chmod 770 /var/cache/nginx
 
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY vhost.default.conf /etc/nginx/conf.d/default.conf
@@ -151,6 +156,6 @@ ENV UPLOAD_FOLDER /upload
 RUN mkdir "$UPLOAD_FOLDER" && chown nginx:nginx -R "$UPLOAD_FOLDER"
 VOLUME /upload
 
-STOPSIGNAL SIGTERM
+STOPSIGNAL SIGQUIT
 
 CMD ["nginx", "-g", "daemon off;"]
