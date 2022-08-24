@@ -1,4 +1,4 @@
-FROM rstmpw/php74mqseries:7.4.29-9.2.2.0
+FROM rstmpw/php74mqseries:7.4.30-9.2.2.0
 
 RUN set -ex \
 		&& apt-get clean && apt-get update \

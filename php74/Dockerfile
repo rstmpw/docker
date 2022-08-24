@@ -1,4 +1,4 @@
-FROM php:7.4.29-fpm-buster
+FROM php:7.4.30-fpm-buster
 
 RUN apt-get update \
  	&& apt-get install -y --no-install-recommends procps \

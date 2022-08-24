@@ -1,4 +1,4 @@
-FROM rstmpw/php74:7.4.29-alpine
+FROM rstmpw/php74:7.4.30-alpine
 
 RUN mkdir -p /opt/crontabs && rm -rf /etc/periodic
 
