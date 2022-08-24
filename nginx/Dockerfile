@@ -54,13 +54,13 @@ RUN apk --no-cache add bash \
 		--add-module=/usr/src/nginx-upload-module-$UPLOAD_MODULE_VERSION \
 	" \
 	&& addgroup -g 101 -S nginx \
-    && adduser -S -D -H -u 101 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx \
+    && adduser -S -D -H -u 100 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx \
 	&& apk add --no-cache --virtual .build-deps \
 		gcc \
 		libc-dev \
 		make \
 		openssl-dev \
-		pcre2-dev \
+		pcre-dev \
     	zlib-dev \
 		linux-headers \
 		curl \
