@@ -1,0 +1,19 @@
+FROM rstmpw/php81mqseries:8.1.12-9.2.2.0
+
+RUN set -ex \
+		&& apt-get clean && apt-get update \
+		# install cron & rsyslog
+		&& apt-get install -y --no-install-recommends cron busybox-syslogd \
+    	&& printf "LANG=\"en_US:UTF-8\"\nLC_ALL=\"en_US:UTF-8\"\n" > /etc/default/locale \
+    	&& sed -i '/^session.*pam_unix.so\s*/i session [success=1 default=ignore] pam_succeed_if.so service in cron quiet use_uid' /etc/pam.d/common-session-noninteractive \
+    	&& apt-get autoclean -qy && rm -rf /var/lib/apt/lists/* \
+    	&& rm -rf /etc/cron.*/* \
+    	&& mkdir -p /opt/crontabs
+
+VOLUME ["/opt/crontabs"]
+
+COPY entrypoint-debian.sh /usr/sbin/entrypoint.sh
+
+ENTRYPOINT ["entrypoint.sh"]
+
+CMD ["cron", "-f"]
