@@ -1,4 +1,4 @@
-FROM php:8.1.11-fpm-buster
+FROM php:8.1.12-fpm-buster
 
 RUN apt-get update && apt-get upgrade -y \
  	&& apt-get install -y --no-install-recommends procps \
@@ -121,7 +121,7 @@ RUN apt-get update && apt-get upgrade -y \
 	&& docker-php-ext-enable redis \
     \
     && apt-get install -y --no-install-recommends librabbitmq4 librabbitmq-dev libssl-dev \
-    && curl -fsSL 'https://github.com/php-amqp/php-amqp/archive/refs/heads/master.tar.gz' -o amqp.tar.gz \
+    && curl -fsSL 'https://github.com/php-amqp/php-amqp/archive/refs/tags/v1.11.0.tar.gz' -o amqp.tar.gz \
     && mkdir -p amqp \
     && tar -xf amqp.tar.gz -C amqp --strip-components=1 \
     && rm amqp.tar.gz \
