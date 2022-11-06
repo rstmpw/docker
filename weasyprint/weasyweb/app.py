@@ -39,7 +39,7 @@ def h2p(code):
     f = request.files['fileselect']
     bs_dir = os.path.join(css_dir, code)
 
-    pdf = HTML(string=f, base_url=bs_dir).write_pdf(font_config=font_config, optimize_size=('fonts',))
+    pdf = HTML(string=f, base_url=bs_dir).write_pdf(font_config=font_config, optimize_size=('fonts', 'images'))
 
     rsp = make_response(pdf)
     rsp.headers['Content-Type'] = 'application/pdf'
