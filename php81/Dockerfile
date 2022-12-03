@@ -1,4 +1,4 @@
-FROM php:8.1.12-fpm-buster
+FROM php:8.1.13-fpm-buster
 
 RUN apt-get update && apt-get upgrade -y \
  	&& apt-get install -y --no-install-recommends procps \
@@ -27,7 +27,10 @@ RUN apt-get update && apt-get upgrade -y \
     && docker-php-ext-install -j$(nproc) xsl soap \
     && apt-get purge --auto-remove -y libxslt-dev \
     \
-    && apt-get install -y --no-install-recommends libpq5 libpq-dev \
+    && apt-get install -y --no-install-recommends curl ca-certificates gnupg \
+    && curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/apt.postgresql.org.gpg > /dev/null \
+    && sh -c 'echo "deb https://apt.postgresql.org/pub/repos/apt buster-pgdg main" > /etc/apt/sources.list.d/pgdg.list' \
+    && apt-get update && apt-get install -y --no-install-recommends libpq5 libpq-dev \
     && docker-php-ext-install -j$(nproc) pgsql pdo_pgsql \
     && apt-get purge --auto-remove -y libpq-dev \
     \
@@ -52,7 +55,7 @@ RUN apt-get update && apt-get upgrade -y \
     && rm -r msgpack \
     && docker-php-ext-enable msgpack \
     \
-    && curl -fsSL 'https://github.com/igbinary/igbinary/archive/refs/tags/3.2.9.tar.gz' -o igbinary.tar.gz \
+    && curl -fsSL 'https://github.com/igbinary/igbinary/archive/refs/tags/3.2.12.tar.gz' -o igbinary.tar.gz \
 	&& mkdir -p igbinary \
 	&& tar -xf igbinary.tar.gz -C igbinary --strip-components=1 \
 	&& rm igbinary.tar.gz \
@@ -121,7 +124,7 @@ RUN apt-get update && apt-get upgrade -y \
 	&& docker-php-ext-enable redis \
     \
     && apt-get install -y --no-install-recommends librabbitmq4 librabbitmq-dev libssl-dev \
-    && curl -fsSL 'https://github.com/php-amqp/php-amqp/archive/refs/tags/v1.11.0.tar.gz' -o amqp.tar.gz \
+    && curl -fsSL 'https://github.com/php-amqp/php-amqp/archive/refs/heads/master.tar.gz' -o amqp.tar.gz \
     && mkdir -p amqp \
     && tar -xf amqp.tar.gz -C amqp --strip-components=1 \
     && rm amqp.tar.gz \

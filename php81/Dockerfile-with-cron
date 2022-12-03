@@ -1,4 +1,4 @@
-FROM rstmpw/php81:8.1.12
+FROM rstmpw/php81:8.1.13
 
 RUN set -ex \
 		&& apt-get clean && apt-get update \
@@ -14,6 +14,6 @@ VOLUME ["/opt/crontabs"]
 
 COPY entrypoint-debian.sh /usr/sbin/entrypoint.sh
 
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["sh", "/usr/sbin/entrypoint.sh"]
 
 CMD ["cron", "-f"]
