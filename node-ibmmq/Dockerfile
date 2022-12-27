@@ -1,4 +1,4 @@
-FROM node:14.17.6-buster-slim
+FROM node:18.12.1-bullseye-slim
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends alien curl ca-certificates python3 make gcc g++ \
@@ -28,3 +28,4 @@ CHANNELS: \n\
 " >> /var/mqm/mqclient.ini \
     && apt-get purge --auto-remove -y alien \
     && apt-get autoclean -qy && rm -rf /var/lib/apt/lists/* \
+    && npm install pm2 -g
