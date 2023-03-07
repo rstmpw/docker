@@ -1,4 +1,4 @@
-FROM php:8.1.13-fpm-buster
+FROM php:8.1.16-fpm-buster
 
 RUN apt-get update && apt-get upgrade -y \
  	&& apt-get install -y --no-install-recommends procps \
@@ -55,7 +55,7 @@ RUN apt-get update && apt-get upgrade -y \
     && rm -r msgpack \
     && docker-php-ext-enable msgpack \
     \
-    && curl -fsSL 'https://github.com/igbinary/igbinary/archive/refs/tags/3.2.12.tar.gz' -o igbinary.tar.gz \
+    && curl -fsSL 'https://github.com/igbinary/igbinary/archive/refs/tags/3.2.14.tar.gz' -o igbinary.tar.gz \
 	&& mkdir -p igbinary \
 	&& tar -xf igbinary.tar.gz -C igbinary --strip-components=1 \
 	&& rm igbinary.tar.gz \
