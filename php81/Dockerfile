@@ -1,4 +1,4 @@
-FROM php:8.1.16-fpm-buster
+FROM php:8.1.19-fpm-buster
 
 RUN apt-get update && apt-get upgrade -y \
  	&& apt-get install -y --no-install-recommends procps \
@@ -90,7 +90,7 @@ RUN apt-get update && apt-get upgrade -y \
 	&& apt-get purge --auto-remove -y libmemcached-dev libhashkit-dev zlib1g-dev \
 	\
 	&& apt-get install -y --no-install-recommends zlib1g-dev \
-	&& curl -fsSL 'https://github.com/websupport-sk/pecl-memcache/archive/refs/tags/8.0.1.tar.gz' -o memcache.tar.gz \
+	&& curl -fsSL 'https://github.com/websupport-sk/pecl-memcache/archive/refs/tags/8.2.tar.gz' -o memcache.tar.gz \
 	&& mkdir -p memcache \
 	&& tar -xf memcache.tar.gz -C memcache --strip-components=1 \
 	&& rm memcache.tar.gz \
