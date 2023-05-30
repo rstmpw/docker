@@ -1,8 +1,8 @@
-FROM alpine:3.16
+FROM alpine:3.18
 
 MAINTAINER RSTM Team "team@rstm.pw"
 
-ENV NGINX_VERSION 1.22.0
+ENV NGINX_VERSION 1.24.0
 ENV UPLOAD_MODULE_VERSION 2.3.0
 
 RUN apk --no-cache add bash \
