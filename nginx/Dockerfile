@@ -5,7 +5,7 @@ MAINTAINER RSTM Team "team@rstm.pw"
 ENV NGINX_VERSION 1.24.0
 ENV UPLOAD_MODULE_VERSION 2.3.0
 
-RUN apk --no-cache add bash \
+RUN apk --no-cache add bash pcre \
 && GPG_KEYS="13C82A63B603576156E30A4EA0EA981B66B0D967" \
 	&& CONFIG="\
 		--prefix=/etc/nginx \
