@@ -6,7 +6,7 @@ ENV LANG=ru_RU.UTF-8
 
 # v59
 
-RUN apk add --no-cache python3 py3-pip py3-wheel cairo pango jpeg openjpeg libintl gettext \
+RUN apk add --no-cache pcre python3 py3-pip py3-wheel cairo pango jpeg openjpeg libintl gettext \
     && apk add --no-cache --virtual build-dependencies build-base linux-headers pcre-dev python3-dev jpeg-dev openjpeg-dev libffi-dev musl-dev zlib-dev gcc g++ glib msttcorefonts-installer ca-certificates curl cmake gettext-dev \
     && curl -fsSL "https://gitlab.com/rilian-la-te/musl-locales/-/archive/master/musl-locales-master.zip" -o musl-locales-master.zip \
 	&& unzip musl-locales-master.zip \
