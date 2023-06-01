@@ -2,10 +2,11 @@
 set -e
 
 rm /etc/crontabs/*
-cp /opt/crontabs/* /etc/crontabs/
-chown root:root /etc/crontabs/*
+cp /opt/crontabs/* /var/spool/cron/crontabs/
+chown root:root /var/spool/cron/crontabs/*
+chmod 0600 /var/spool/cron/crontabs/*
 
-cd /etc/crontabs/
+cd /var/spool/cron/crontabs
 for fl in * ; do
   uid=$(echo "$fl" | sed -r 's/^u([0-9]+)$/\1/')
   if [ "$fl" != "$uid" ]; then
@@ -15,4 +16,6 @@ for fl in * ; do
   fi
 done
 
-crond -f -d 8
+syslogd -O /proc/1/fd/1 -S
+
+crond -f -s
