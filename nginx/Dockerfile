@@ -5,7 +5,7 @@ MAINTAINER RSTM Team "team@rstm.pw"
 ENV NGINX_VERSION 1.24.0
 ENV UPLOAD_MODULE_VERSION 2.3.0
 
-RUN apk --no-cache add bash pcre \
+RUN apk --no-cache add pcre \
 && GPG_KEYS="13C82A63B603576156E30A4EA0EA981B66B0D967" \
 	&& CONFIG="\
 		--prefix=/etc/nginx \
@@ -23,6 +23,9 @@ RUN apk --no-cache add bash pcre \
 		--http-scgi-temp-path=/var/cache/nginx/scgi_temp \
 		--user=nginx \
 		--group=nginx \
+        --with-pcre \
+        --with-pcre-jit \
+        --without-pcre2 \
 		--with-http_ssl_module \
 		--with-http_realip_module \
 #		--with-http_addition_module \
@@ -151,10 +154,11 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY vhost.default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
+EXPOSE 443
 
-ENV UPLOAD_FOLDER /upload
+ENV UPLOAD_FOLDER /tmp/upload
 RUN mkdir "$UPLOAD_FOLDER" && chown nginx:nginx -R "$UPLOAD_FOLDER"
-VOLUME /upload
+VOLUME ["$UPLOAD_FOLDER"]
 
 STOPSIGNAL SIGQUIT
 
