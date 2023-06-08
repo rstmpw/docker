@@ -114,8 +114,6 @@ RUN set -ex \
    	&& mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
    	&& cd /var/www/html/
 
-VOLUME ["/opt/crontabs"]
-
 COPY entrypoint.cron.sh /usr/local/etc/php/entrypoint.cron.sh
 COPY entrypoint.cli.sh /usr/local/etc/php/entrypoint.cli.sh
 
