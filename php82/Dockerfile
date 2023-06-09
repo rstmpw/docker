@@ -2,6 +2,13 @@ FROM php:8.2.6-fpm-alpine3.18
 
 ENV MUSL_LOCPATH=/usr/share/i18n/locales/musl
 
+COPY entrypoint.cron.sh /usr/local/etc/php/entrypoint.cron.sh
+COPY entrypoint.cli.sh /usr/local/etc/php/entrypoint.cli.sh
+COPY php-fpm.conf /usr/local/etc/php-fpm.conf
+COPY conf/php.ini-cli /etc/php/php.ini-cli
+COPY conf/php.ini-fpm /etc/php/php.ini-fpm
+COPY conf/php-fpm.d/sample.pool.conf /etc/php/php-fpm.d/sample.pool.conf
+
 RUN set -ex \
     && apk update \
     && apk add --no-cache procps-ng cronie libintl gettext tzdata libmemcached-libs msgpack-c libssh \
@@ -102,24 +109,21 @@ RUN set -ex \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) opcache mysqli sysvsem sockets bcmath zip xsl soap pgsql pdo_pgsql pdo_mysql gd intl bz2 \
     \
+    # XDebug
+    #&& pecl install xdebug \
+    #&& docker-php-ext-enable xdebug \
+    \
     # install cron
     && mkdir -p /opt/crontabs && rm -rf /etc/periodic \
-#   && pecl install xdebug \
-#   && docker-php-ext-enable xdebug \
     \
     && apk del .build-deps \
    	&& cd /usr/local/etc/php/conf.d \
     && mv docker-php-ext-igbinary.ini 00-docker-php-ext-igbinary.ini \
    	&& mv docker-php-ext-msgpack.ini 01-docker-php-ext-msgpack.ini \
-   	&& mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" \
-   	&& cd /var/www/html/
-
-COPY entrypoint.cron.sh /usr/local/etc/php/entrypoint.cron.sh
-COPY entrypoint.cli.sh /usr/local/etc/php/entrypoint.cli.sh
+   	&& ln -s "${PHP_INI_DIR}/php.ini-production" "${PHP_INI_DIR}/php.ini" \
+   	&& ln -s "/etc/php/php.ini-fpm" "${PHP_INI_DIR}/conf.d/override.ini" \
+   	&& cd /opt/
 
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
-
-#   && pecl install xdebug \
-#   && docker-php-ext-enable xdebug \

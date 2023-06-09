@@ -1,6 +1,11 @@
 #!/bin/sh
 set -e
 
+if [ -f /etc/php/php.ini-cli ]; then
+  rm "${PHP_INI_DIR}/conf.d/override.ini"
+  ln -s "/etc/php/php.ini-cli" "${PHP_INI_DIR}/conf.d/override.ini"
+fi
+
 rm /etc/crontabs/*
 cp /opt/crontabs/* /var/spool/cron/crontabs/
 chown root:root /var/spool/cron/crontabs/*
