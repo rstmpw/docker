@@ -122,6 +122,10 @@ RUN set -ex \
    	&& mv docker-php-ext-msgpack.ini 01-docker-php-ext-msgpack.ini \
    	&& ln -s "${PHP_INI_DIR}/php.ini-production" "${PHP_INI_DIR}/php.ini" \
    	&& ln -s "/etc/php/php.ini-fpm" "${PHP_INI_DIR}/conf.d/override.ini" \
+    \
+    # install composer \
+    && curl https://getcomposer.org/download/latest-stable/composer.phar -o /usr/local/bin/composer && chmod +x /usr/local/bin/composer \
+    \
    	&& cd /opt/
 
 ENV LANG en_US.UTF-8
