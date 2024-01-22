@@ -1,4 +1,4 @@
-FROM php:8.2.9-fpm-alpine3.18
+FROM php:8.2.15-alpine3.19
 
 ENV MUSL_LOCPATH=/usr/share/i18n/locales/musl
 
@@ -42,7 +42,7 @@ RUN set -ex \
     && rm -r msgpack \
     && docker-php-ext-enable msgpack \
     \
-	&& curl -fsSL 'https://github.com/igbinary/igbinary/archive/refs/tags/3.2.14.tar.gz' -o igbinary.tar.gz \
+	&& curl -fsSL 'https://github.com/igbinary/igbinary/archive/refs/tags/3.2.15.tar.gz' -o igbinary.tar.gz \
     && mkdir -p igbinary \
     && tar -xf igbinary.tar.gz -C igbinary --strip-components=1 \
     && rm igbinary.tar.gz \
@@ -90,7 +90,7 @@ RUN set -ex \
 	&& rm -r memcache \
 	&& docker-php-ext-enable memcache \
     \
-    && curl -fsSL 'https://github.com/phpredis/phpredis/archive/refs/tags/5.3.7.tar.gz' -o redis.tar.gz \
+    && curl -fsSL 'https://github.com/phpredis/phpredis/archive/refs/tags/6.0.2.tar.gz' -o redis.tar.gz \
 	&& mkdir -p redis \
 	&& tar -xf redis.tar.gz -C redis --strip-components=1 \
 	&& rm redis.tar.gz \
