@@ -1,4 +1,4 @@
-FROM php:8.2.15-alpine3.19
+FROM php:8.2.15-fpm-alpine3.19
 
 ENV MUSL_LOCPATH=/usr/share/i18n/locales/musl
 
