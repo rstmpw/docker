@@ -29,16 +29,16 @@ RUN set -ex \
     && pecl install msgpack \
     && docker-php-ext-enable msgpack \
     \
-    && pecl install igbinary \
+    && pecl install --configureoptions 'enable-igbinary="yes"' igbinary \
     && docker-php-ext-enable igbinary \
     \
-    && pecl install memcached \
+    && pecl install --configureoptions 'enable-memcached-igbinary="yes" enable-memcached-json="yes" enable-memcached-msgpack="yes"' memcached \
 	&& docker-php-ext-enable memcached \
 	\
 	&& pecl install memcache \
 	&& docker-php-ext-enable memcache \
     \
-    && pecl install redis \
+    && pecl install --configureoptions 'enable-redis-igbinary="yes"' redis \
 	&& docker-php-ext-enable redis \
     \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
