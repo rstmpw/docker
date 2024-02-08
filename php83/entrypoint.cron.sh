@@ -21,8 +21,6 @@ for fl in * ; do
   fi
 done
 
-printenv > /etc/environment
-
 syslogd -O /proc/1/fd/1 -S
 
 crond -f -s
