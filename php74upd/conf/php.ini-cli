@@ -1,0 +1,11 @@
+expose_php = off
+display_errors = off
+log_errors = on
+error_reporting = E_ALL
+date.timezone = Europe/Moscow
+memory_limit = 512M
+max_execution_time = 0
+;open_basedir = /usr/local/lib/php/:/tmp/:/opt/
+disable_functions = "exec,eval,passthru,shell_exec,system,proc_open,popen,parse_ini_file,show_source,mail,mb_send_mail,imap_mail,pcntl_exec,dl"
+allow_url_fopen = off
+allow_url_include = off

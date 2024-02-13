@@ -1,0 +1,11 @@
+FROM rstmpw/php74:7.4.33upd
+
+RUN set -ex \
+		&& apt-get update && apt-get install -y --no-install-recommends git \
+		&& cd /tmp && git clone https://github.com/adsr/phpspy.git \
+        && cd phpspy \
+        && USE_ZEND=1 make && make install \
+     	&& rm -r phpspy \
+        && apt-get purge --auto-remove -y git \
+        \
+        && apt-get autoclean -qy && rm -rf /var/lib/apt/lists/*

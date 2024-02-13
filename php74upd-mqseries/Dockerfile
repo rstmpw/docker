@@ -1,4 +1,4 @@
-FROM rstmpw/php74:7.4.30
+FROM rstmpw/php74:7.4.33upd
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends alien \

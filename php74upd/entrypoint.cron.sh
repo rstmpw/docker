@@ -1,6 +1,11 @@
 #!/bin/sh
 set -e
 
+if [ -f /etc/php/php.ini-cli ]; then
+  rm "${PHP_INI_DIR}/conf.d/override.ini"
+  ln -s "/etc/php/php.ini-cli" "${PHP_INI_DIR}/conf.d/override.ini"
+fi
+
 if [ ! -d /var/spool/cron/crontabs ]; then
   mkdir -p /var/spool/cron/crontabs
 elif [ "$(ls -A /var/spool/cron/crontabs)" ]; then
@@ -22,4 +27,4 @@ fi
 
 syslogd -O /proc/1/fd/1 -S
 
-exec "$@"
+cron -f
