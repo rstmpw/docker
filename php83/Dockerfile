@@ -11,7 +11,7 @@ COPY conf/php-fpm.d/sample.pool.conf /etc/php/php-fpm.d/sample.pool.conf
 
 RUN set -ex \
     && apk update \
-    && apk add --no-cache procps-ng cronie libintl gettext tzdata libmemcached-libs msgpack-c libssh \
+    && apk add --no-cache procps-ng cronie runuser libintl gettext tzdata libmemcached-libs msgpack-c libssh \
         libpng libpq libjpeg-turbo freetype libxslt libxml2 icu libbz2 libzip zlib \
     && apk add --no-cache --virtual .build-deps autoconf unzip cmake make gcc gcc-objc gettext-dev \
         musl-dev libmemcached-dev msgpack-c-dev libssh-dev linux-headers \
