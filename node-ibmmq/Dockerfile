@@ -1,4 +1,4 @@
-FROM node:18.12.1-bullseye-slim
+FROM node:20.13.1-slim
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends alien curl ca-certificates python3 make gcc g++ \
