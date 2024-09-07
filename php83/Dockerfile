@@ -1,4 +1,4 @@
-FROM php:8.3.10-fpm-alpine3.20
+FROM php:8.3.11-fpm-alpine3.20
 
 ENV MUSL_LOCPATH=/usr/share/i18n/locales/musl
 
@@ -63,6 +63,6 @@ RUN set -ex \
     \
    	&& cd /opt/
 
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US:en
+ENV LC_ALL=en_US.UTF-8
