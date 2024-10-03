@@ -1,7 +1,7 @@
 FROM node:20.17.0-slim
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends alien curl ca-certificates python3 make gcc g++ \
+RUN apt-get update && apt-get upgrade \
+    && apt-get install -y --no-install-recommends alien curl ca-certificates python3 make gcc g++ procps \
     && curl -fsSL 'https://files.rstm.pw/mqadv_dev922_linux_x86-64.tar.gz' -o mqc.tar.gz \
     && mkdir -p mqc \
     && tar -xf mqc.tar.gz -C mqc --strip-components=1 \
