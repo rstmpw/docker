@@ -1,4 +1,4 @@
-FROM node:20.17.0-slim
+FROM node:20.18.0-slim
 
 RUN apt-get update && apt-get upgrade \
     && apt-get install -y --no-install-recommends alien curl ca-certificates python3 make gcc g++ procps \
