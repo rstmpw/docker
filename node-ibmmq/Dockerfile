@@ -1,6 +1,6 @@
-FROM node:20.18.0-slim
+FROM node:26.1.0-slim
 
-RUN apt-get update && apt-get upgrade \
+RUN apt-get update && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends alien curl ca-certificates python3 make gcc g++ procps \
     && curl -fsSL 'https://files.rstm.pw/mqadv_dev922_linux_x86-64.tar.gz' -o mqc.tar.gz \
     && mkdir -p mqc \
@@ -28,4 +28,4 @@ CHANNELS: \n\
 " >> /var/mqm/mqclient.ini \
     && apt-get purge --auto-remove -y alien \
     && apt-get autoclean -qy && rm -rf /var/lib/apt/lists/* \
-    && npm install pm2 -g
+    && npm install pm2 -g && npm install --global yarn
